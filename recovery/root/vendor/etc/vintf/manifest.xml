@@ -1,8 +1,108 @@
 <!--
     Input:
-        manifest.xml
+        device/samsung/universal9830-common/manifest.xml
+        device/samsung/universal9830-common/hubble/manifest.xml
+        recovery/root/vendor/etc/vintf/manifest.xml
+        + keymaster/gatekeeper fixes for recovery (mdfpp + strongbox instances)
 -->
-<manifest version="4.0" type="device" target-level="6">
+<manifest version="2.0" type="device" target-level="6">
+    <hal format="hidl">
+        <name>android.hardware.audio</name>
+        <transport>hwbinder</transport>
+        <fqname>@7.1::IDevicesFactory/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.audio.effect</name>
+        <transport>hwbinder</transport>
+        <fqname>@7.0::IEffectsFactory/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.bluetooth</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::IBluetoothHci/default</fqname>
+    </hal>
+    <hal format="hidl" override="true">
+        <name>android.hardware.gatekeeper</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::IGatekeeper/default</fqname>
+        <fqname>@1.0::IGatekeeper/mdfpp</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.gnss</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.1::IGnss/default</fqname>
+        <fqname>@2.1::IGnss/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.graphics.allocator</name>
+        <transport>hwbinder</transport>
+        <fqname>@2.0::IAllocator/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.graphics.composer</name>
+        <transport>hwbinder</transport>
+        <fqname>@2.4::IComposer/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.graphics.mapper</name>
+        <transport arch="32+64">passthrough</transport>
+        <fqname>@2.1::IMapper/default</fqname>
+    </hal>
+    <hal format="hidl" override="true">
+        <name>android.hardware.keymaster</name>
+        <transport>hwbinder</transport>
+        <fqname>@4.0::IKeymasterDevice/default</fqname>
+        <fqname>@4.0::IKeymasterDevice/strongbox</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.media.omx</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::IOmx/default</fqname>
+        <fqname>@1.0::IOmxStore/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.neuralnetworks</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.3::IDevice/eden-drv</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>android.hardware.soundtrigger</name>
+        <transport>hwbinder</transport>
+        <fqname>@2.3::ISoundTriggerHw/default</fqname>
+    </hal>
+    <hal format="aidl">
+        <name>vendor.lineage.livedisplay</name>
+        <fqname>IDisplayColorCalibration/default</fqname>
+        <fqname>IDisplayModes/default</fqname>
+        <fqname>ISunlightEnhancement/default</fqname>
+    </hal>
+    <hal format="aidl">
+        <name>vendor.lineage.livedisplay</name>
+        <fqname>IReadingEnhancement/default</fqname>
+    </hal>
+    <hal format="aidl">
+        <name>vendor.lineage.touch</name>
+        <fqname>IGloveMode/default</fqname>
+        <fqname>ITouchscreenGesture/default</fqname>
+    </hal>
+    <hal format="aidl">
+        <name>vendor.lineage.touch</name>
+        <fqname>IHighTouchPollingRate/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>vendor.samsung.hardware.gnss</name>
+        <transport>hwbinder</transport>
+        <fqname>@2.1::ISehGnss/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>vendor.samsung_slsi.hardware.eden_runtime</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::IEdenruntime/default</fqname>
+    </hal>
+    <hal format="hidl" override="true">
+        <name>vendor.samsung_slsi.hardware.radio</name>
+        <transport>hwbinder</transport>
+    </hal>
     <sepolicy>
         <version>30.0</version>
     </sepolicy>
