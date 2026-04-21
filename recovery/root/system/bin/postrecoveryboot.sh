@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#	  http://www.apache.org/licenses/LICENSE-2.0
+#         http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,18 +14,35 @@
 #
 
 mkdir -p "/tmp/vendor";
-blockdev --setrw "/dev/block/mapper/vendor";
-mount -w "/dev/block/mapper/vendor" "/tmp/vendor";
+mount -t ext4 -o ro "/dev/block/mapper/vendor" "/tmp/vendor" 2> /dev/null;
 
-if [ -f "/tmp/vendor/recovery-from-boot.p" ]; then
-  echo "I:postrecoveryboot: Removing stock recovery file in /vendor to prevent the stock ROM from replacing TWRP." >> /tmp/recovery.log;
-  rm "/tmp/vendor/bin/install-recovery.sh";
-  rm "/tmp/vendor/etc/init/vendor_flash_recovery.rc";
-  rm "/tmp/vendor/recovery-from-boot.p";
+if [ $? -ne 0 ]; then
+      # Mounting as EXT4 failed, that must mean that we're on an EroFS vendor
+      # And EroFS doesn't need read-only specified, it's naturally read-only
+      echo "I:postrecoveryboot: EXT4 mount failed! Mounting as EroFS." >> /tmp/recovery.log;
+      mount -t erofs "/dev/block/mapper/vendor" "/tmp/vendor";
+fi
+
+if [ -f "/tmp/vendor/bin/install-recovery.sh" ]; then
+  BOOT_HASH=$(sha1sum "/dev/block/by-name/boot" | cut -d ' ' -f 1);
+  EXPECTED_BOOT_HASH=$(sed -n '5p' "/tmp/vendor/bin/install-recovery.sh" | cut -d ':' -f 4 | sed 's/ .*//');
+
+  if [ "$BOOT_HASH" == "$EXPECTED_BOOT_HASH" ]; then
+    echo "I:postrecoveryboot: Repacking boot image to prevent the stock ROM from replacing TWRP." >> /tmp/recovery.log;
+    mkdir -p "/tmp/out";
+    cd "/tmp/out";
+    cat "/dev/block/by-name/boot" > "/tmp/out/boot.img";
+    magiskboot unpack "/tmp/out/boot.img";
+    magiskboot repack "/tmp/out/boot.img";
+    magiskboot cleanup;
+    mv -f "/tmp/out/new-boot.img" "/tmp/out/boot.img";
+    dd if="/tmp/out/boot.img" of="/dev/block/by-name/boot";
+    cd "/";
+    rm -r "/tmp/out";
+  fi;
 fi;
 
 umount "/tmp/vendor";
 rm -r "/tmp/vendor";
-blockdev --setro "/dev/block/mapper/vendor";
 
 exit 0;

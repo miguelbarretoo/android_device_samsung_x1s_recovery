@@ -22,11 +22,6 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
     fastbootd
 
-# qcom decryption
-PRODUCT_PACKAGES += \
-    qcom_decrypt \
-    qcom_decrypt_fbe
-
 # Dependencies
 TARGET_RECOVERY_DEVICE_MODULES += \
     libion \
@@ -49,9 +44,10 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-service
 
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.0-service \
+    android.hardware.keymaster@4.0-service.samsung \
     android.hardware.gatekeeper@1.0-service \
     libkeymaster4 \
-    libkeymaster4_1 \
-    libgatekeeper \
-    libion
+    libkeymaster4_1support \
+    gatekeeper.exynos990.so \
+    libion \
+    android.hardware.gatekeeper@1.0-impl

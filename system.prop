@@ -1,11 +1,11 @@
 #
-# vendor.prop for r8q
+# vendor.prop for x1s
 #
 
 # Device
-ro.display.series=Samsung Galaxy S20 FE (R8Q)
-ro.product.board=kona
-ro.board.platform=kona
+ro.display.series=Samsung Galaxy S20 
+ro.product.board=exynos990
+ro.board.platform=universal990
 
 # Crypto & Encryption
 ro.crypto.allow_encrypt_override=true
@@ -22,14 +22,14 @@ ro.crypto.volume.filenames_mode=aes-256-cts
 
 # USB Configuration
 persist.sys.usb.config=mtp
-sys.usb.controller=a600000.dwc3
+sys.usb.controller=10e00000.dwc3
 vendor.usb.use_ffs_mtp=1
 
 # Partition
 ro.boot.dynamic_partitions=true
 
 # Display
-ro.sf.lcd_density=407
+ro.sf.lcd_density=640
 
 # Haptics (Vibrations)
 ro.vibrator.state=1
