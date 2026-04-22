@@ -1,5 +1,6 @@
 service tzts_daemon /vendor/bin/tzts_daemon
-    class core
+    class early_hal
     user root
     group root
     seclabel u:r:recovery:s0
+    oneshot
