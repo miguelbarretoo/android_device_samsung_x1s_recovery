@@ -6,9 +6,9 @@ on early-init
 on fs
     wait /dev/block/platform/${ro.boot.boot_devices}
     symlink /dev/block/platform/${ro.boot.boot_devices} /dev/block/bootdevice
-    mount ext4 /dev/block/by-name/efs /efs ro wait
-    mount ext4 /dev/block/by-name/sec_efs /mnt/vendor/efs ro wait
-    start tzts_daemon
+    mount ext4 /dev/block/by-name/efs /efs rw wait
+    mount ext4 /dev/block/by-name/sec_efs /mnt/vendor/efs rw wait
+   # start tzts_daemon
 
 on late-init
     setprop service.adb.root 1
@@ -23,6 +23,7 @@ on property:hwservicemanager.ready=true
     mkdir /mnt/vendor/efs/DAK 0775 root root
     mkdir /data/vendor/keymaster 0775 root root
     start tzts_daemon
-    exec /system/bin/sleep 2
+
+on property:tzts_daemon.ready=true
     start vendor.keymaster-4-0
-    start vendor.keymaster-4-0_strongbox
+   # start vendor.keymaster-4-0_strongbox

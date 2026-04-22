@@ -58,7 +58,8 @@ odm        /odm        erofs  ro                     wait,logical,first_stage_mo
 
 
 # DATA (AJUSTED FOR EXYNOS)
- /dev/block/by-name/userdata    /data   f2fs   noatime,nosuid,nodev,discard,usrquota,grpquota,inlinecrypt,reserve_root=32768,resgid=5678,fsync_mode=nobarrier   latemount,wait,check,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,quota,reservedsize=128M,keydirectory=/metadata/vold/metadata_encryption,checkpoint=fs
+# <src>                        <mnt_point>  <type>  <mnt_flags and options>          <fs_mgr_flags>
+/dev/block/by-name/userdata    /data        f2fs    noatime,nosuid,nodev,discard,usrquota,grpquota,fsync_mode=nobarrier,reserve_root=32768,resgid=1065,checkpoint_merge,compress_algorithm=lz4,compress_log_size=2    wait,check,formattable,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption 
 
 
 # MISC

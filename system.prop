@@ -38,3 +38,17 @@ ro.vibrator.state=1
 ro.boot.vbmeta.avb_version=1.0
 ro.boot.avb_version=1.0
 
+# Forçar o TWRP a carregar a interface mesmo se o Keymaster demorar
+twrp.crypto_ready=1
+
+# Evita que o Keystore 2.0 trave o processo de boot do recovery
+ro.hardware.keystore_desede=false
+ro.hardware.strongbox_keystore=false
+
+# Se o seu Android for 11 ou superior, o Gatekeeper pode precisar disso
+vendor.gatekeeper.disable_on_with_no_password=1
+persist.sys.keymaster_v3_0.remote=0
+
+# Desativa a espera pelo Keymaster no início
+ro.crypto.state=unencrypted
+ro.crypto.fs_crypto_blkdev=/dev/block/by-name/userdata

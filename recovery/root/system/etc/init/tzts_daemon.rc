@@ -4,3 +4,7 @@ service tzts_daemon /vendor/bin/tzts_daemon
     group root
     seclabel u:r:recovery:s0
     oneshot
+    onrestart setprop tzts_daemon.ready true
+
+on property:init.svc.tzts_daemon=stopped
+    setprop tzts_daemon.ready true
