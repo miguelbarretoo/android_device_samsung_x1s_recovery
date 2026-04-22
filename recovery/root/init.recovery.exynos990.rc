@@ -1,5 +1,6 @@
 on early-init
     mkdir /mnt/vendor/efs 0771 radio system
+    setprop vendor.tzts_daemon Ready
 
 on late-init
     setprop service.adb.root 1
@@ -14,6 +15,7 @@ on boot
     start health-hal-2-1
 
 on property:hwservicemanager.ready=true
+    setprop vendor.tzts_daemon Ready
     mkdir /mnt/vendor/efs/DAK 0775 root root
     mkdir /data/vendor/keymaster 0775 root root
     start vendor.keymaster-4-0
