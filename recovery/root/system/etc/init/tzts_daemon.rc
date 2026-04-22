@@ -1,0 +1,5 @@
+service tzts_daemon /vendor/bin/tzts_daemon
+    class core
+    user root
+    group root
+    seclabel u:r:recovery:s0

@@ -1,18 +1,22 @@
 on early-init
     mkdir /mnt/vendor/efs 0771 radio system
+    mkdir /efs 0771 radio system
     setprop vendor.tzts_daemon Ready
+
+on fs
+    wait /dev/block/platform/${ro.boot.boot_devices}
+    symlink /dev/block/platform/${ro.boot.boot_devices} /dev/block/bootdevice
+    mount ext4 /dev/block/by-name/efs /efs ro wait
+    mount ext4 /dev/block/by-name/sec_efs /mnt/vendor/efs ro wait
 
 on late-init
     setprop service.adb.root 1
     setprop sys.usb.configfs 1
     setprop sys.usb.config adb
 
-on fs
-    wait /dev/block/platform/${ro.boot.boot_devices}
-    symlink /dev/block/platform/${ro.boot.boot_devices} /dev/block/bootdevice
-
 on boot
     start health-hal-2-1
+    start tzts_daemon
 
 on property:hwservicemanager.ready=true
     setprop vendor.tzts_daemon Ready
