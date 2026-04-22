@@ -12,3 +12,9 @@ on fs
 
 on boot
     start health-hal-2-1
+
+on property:hwservicemanager.ready=true
+    mkdir /mnt/vendor/efs/DAK 0775 root root
+    mkdir /data/vendor/keymaster 0775 root root
+    start vendor.keymaster-4-0
+    start vendor.keymaster-4-0_strongbox
